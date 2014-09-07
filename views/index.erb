@@ -44,5 +44,25 @@
       <%= @times_house["results"]["votes"][0]["result"]%>
 
     </ul>
+      <% forecast = @wunderground_response["forecast"]["txt_forecast"]["forecastday"].first(12) %>
+      <ul>
+
+          <%=forecast[0]["title"]%>:
+          <%=forecast[0]["fcttext"]%>
+        <br>
+
+          <%=forecast[2]["title"]%>:
+          <%=forecast[2]["fcttext"]%>
+        <br>
+          <%=forecast[4]["title"]%>:
+          <%=forecast[4]["fcttext"]%>
+        <br>
+          <%=forecast[6]["title"]%>:
+          <%=forecast[6]["fcttext"]%>
+        <br>
+          <%=forecast[8]["title"]%>:
+          <%=forecast[8]["fcttext"]%>
+
+      </ul>
   </body>
   </html>
