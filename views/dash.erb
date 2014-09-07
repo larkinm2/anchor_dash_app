@@ -1,0 +1,16 @@
+<section id = "letters">
+    <ul>
+      <% @anchors.each do |item| %>
+      <li>
+
+          Weather Reporter: <%= item[:weather] %><br>
+          Traffic Reporter: <%= item[:traffic] %><br>
+          Sports Reporter: <%= item[:sports] %><br>
+          Field Reporter: <%= item[:field_reporter] %><br>
+          Editor's Note: <%= item[:editor_note] %><br>
+          <br>
+
+      </li>
+      <% end %>
+    </ul>
+</section>

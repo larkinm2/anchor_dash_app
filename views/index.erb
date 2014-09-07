@@ -1,0 +1,48 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <title></title>
+      <meta charset="UTF-8">
+  <title>Anchor Dash Baby</title>
+  </head>
+  <body>
+    <ul>
+      <li><a href="/dash.erb"></a>Dashboard</li>
+      <li><a href="/anchor.erb"></a>Editor Desk</li><br><br>
+      Senate Bills<br>
+      Bill Description:
+      <%= @times_senate["results"]["votes"][0]["description"]%>
+      <br><br>
+      Democratic Vote<br>
+      Yes: <%= @times_senate["results"]["votes"][0]["democratic"]["yes"]%>
+      No: <%= @times_senate["results"]["votes"][0]["democratic"]["no"]%>
+      <br><br>
+      Republican Vote<br>
+      Yes: <%= @times_senate["results"]["votes"][0]["republican"]["yes"]%>
+      No: <%= @times_senate["results"]["votes"][0]["republican"]["no"]%>
+      <br><br>
+      Result:
+      <%= @times_senate["results"]["votes"][0]["result"]%>
+      <br><br><br>
+
+
+
+
+      House Bills<br>
+      Bill Description:
+      <%= @times_house["results"]["votes"][0]["description"]%>
+      <br><br>
+      Democratic Vote<br>
+      Yes: <%= @times_house["results"]["votes"][0]["democratic"]["yes"]%>
+      No: <%= @times_house["results"]["votes"][0]["democratic"]["no"]%>
+      <br><br>
+      Republican Vote<br>
+      Yes: <%= @times_house["results"]["votes"][0]["republican"]["yes"]%>
+      No: <%= @times_house["results"]["votes"][0]["republican"]["no"]%>
+      <br><br>
+      Result:
+      <%= @times_house["results"]["votes"][0]["result"]%>
+
+    </ul>
+  </body>
+  </html>
