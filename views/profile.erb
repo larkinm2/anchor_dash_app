@@ -1,0 +1,29 @@
+<section id="profileform">
+  <h2>Profile Form</h2>
+
+  <form method="POST" action="/dash">
+    <label for="name">Name </label>
+    <input type="text" name="name" id="toaddress" />
+    <br/><br/>
+
+
+    <label for="city">City: </label>
+    <input type="text" name="city" id="fromaddress" />
+    <br/><br/>
+
+
+    <label for="picture_link">Picture Link: </label>
+    <input type="text" name="picture_link" id="message" />
+    <br/><br/>
+
+    <label for="message">
+        <input type="checkbox" name="five_day_forecast" value = "Five Day Forecast">Five-Day forecast</input>
+        <input type="checkbox" name="house_bills" value = "House Bills">House Bills</input>
+        <input type="checkbox" name="senate_bills" value = "Senate Bills">Senate Bills</input>
+        <input type="checkbox" name="top_stocks" value = "Top Stocks">Top Stocks</input>
+
+      </select>
+        <br>
+
+    <input type="submit" value="Submit" />
+  </form>

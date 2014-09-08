@@ -2,15 +2,79 @@
     <ul>
       <% @anchors.each do |item| %>
       <li>
-
+        <span>
           Weather Reporter: <%= item[:weather] %><br>
           Traffic Reporter: <%= item[:traffic] %><br>
           Sports Reporter: <%= item[:sports] %><br>
           Field Reporter: <%= item[:field_reporter] %><br>
           Editor's Note: <%= item[:editor_note] %><br>
           <br>
-
       </li>
       <% end %>
     </ul>
+
+          Senate Bills<br>
+      Bill Description:
+      <%= @times_senate["results"]["votes"][0]["description"]%>
+      <br><br>
+      Democratic Vote<br>
+      Yes: <%= @times_senate["results"]["votes"][0]["democratic"]["yes"]%>
+      No: <%= @times_senate["results"]["votes"][0]["democratic"]["no"]%>
+      <br><br>
+      Republican Vote<br>
+      Yes: <%= @times_senate["results"]["votes"][0]["republican"]["yes"]%>
+      No: <%= @times_senate["results"]["votes"][0]["republican"]["no"]%>
+      <br><br>
+      Result:
+      <%= @times_senate["results"]["votes"][0]["result"]%>
+      <br><br><br>
+
+
+
+
+      House Bills<br>
+      Bill Description:
+      <%= @times_house["results"]["votes"][0]["description"]%>
+      <br><br>
+      Democratic Vote<br>
+      Yes: <%= @times_house["results"]["votes"][0]["democratic"]["yes"]%>
+      No: <%= @times_house["results"]["votes"][0]["democratic"]["no"]%>
+      <br><br>
+      Republican Vote<br>
+      Yes: <%= @times_house["results"]["votes"][0]["republican"]["yes"]%>
+      No: <%= @times_house["results"]["votes"][0]["republican"]["no"]%>
+      <br><br>
+      Result:
+      <%= @times_house["results"]["votes"][0]["result"]%>
+
+    </ul>
+      <% forecast = @wunderground_response["forecast"]["txt_forecast"]["forecastday"].first(12) %>
+      <ul>
+
+          <%=forecast[0]["title"]%>:
+          <%=forecast[0]["fcttext"]%>
+        <br>
+
+          <%=forecast[2]["title"]%>:
+          <%=forecast[2]["fcttext"]%>
+        <br>
+          <%=forecast[4]["title"]%>:
+          <%=forecast[4]["fcttext"]%>
+        <br>
+          <%=forecast[6]["title"]%>:
+          <%=forecast[6]["fcttext"]%>
+        <br>
+          <%=forecast[8]["title"]%>:
+          <%=forecast[8]["fcttext"]%>
+
+      </ul>
+      <br><br>
+
+      Google: <%=@data[0].ask%> <%=@data[0].change%>
+      <br>
+      Apple: <%=@data[1].ask%> <%=@data[1].change%>
+      <br>
+      Ford: <%=@data[2].ask%> <%=@data[2].change%>
 </section>
+
+

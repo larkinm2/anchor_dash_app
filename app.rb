@@ -6,6 +6,7 @@ require 'twitter'
 require 'yahoo_finance'
 require 'uri'
 require 'json'
+require 'securerandom'
 
 class App < Sinatra::Base
 
@@ -27,6 +28,7 @@ class App < Sinatra::Base
     #   client = Twitter::REST::Client.new(config)
     # end
       WUNDERGROUND_API_KEY = "1a6e6fc49fe9c3f3"
+    end
 
 
     before do
@@ -42,7 +44,56 @@ class App < Sinatra::Base
   # Routes
   ########################
 
+      CLIENT_ID     = "3dcc9e47c28497168cbb"
+      CLIENT_SECRET = "d64574063caf092355ffcc0499a75ea531a46eec"
+      CALLBACK_URL  = "http://127.0.0.1:9292/oauth_callback"
+
     get('/') do
+    base_url = "https://github.com/login/oauth/authorize"
+    scope = "user"
+    # generate a random string of characters
+    state = SecureRandom.urlsafe_base64
+    # storing state in session because we need to compare it in a later request
+    session[:state] = state
+    # turn the hash into a query string
+    query_params = URI.encode_www_form({
+                                        :client_id    => CLIENT_ID,
+                                        :scope        => scope,
+                                        :redirect_uri => CALLBACK_URL,
+                                        :state        => state
+                                       })
+    @url = base_url + "?" + query_params
+    render(:erb, :index)
+  end
+
+  get('/oauth_callback') do
+    code = params[:code]
+    # compare the states to ensure the information is from who we think it is
+    if session[:state] == params[:state]
+      # send a POST
+      response = HTTParty.post("https://github.com/login/oauth/access_token",
+                               :body => {
+                                           :client_id     => CLIENT_ID,
+                                           :client_secret => CLIENT_SECRET,
+                                           :code          => code,
+                                           :redirect_uri  => CALLBACK_URL
+                                         },
+                               :headers => {
+                                             "Accept" => "application/json"
+                                           })
+      session[:access_token] = response["access_token"]
+    end
+    redirect to("/profile")
+  end
+
+
+
+
+    get('/editor') do
+      render(:erb, :editor)
+    end
+
+    get('/dash') do
       #Ny Times Senate vote API
       time_base_url = "http://api.nytimes.com/svc/politics/3/us/legislative/congress/"
       time_chamber_senate = "senate"
@@ -72,26 +123,19 @@ class App < Sinatra::Base
 
       #Yahoo finance API
       @data = YahooFinance.quotes(["GOOG","AAPL","FORD",], [:ask,:change])
-
-      render(:erb, :index)
-    end
-
-
-
-    get('/dash') do
+      #Github address for yahoo finance gem -- "https://github.com/herval/yahoo-finance/blob/master/README.md"
       @anchors = @@anchors
       render(:erb, :dash)
     end
 
-
-    get('/editor') do
-      render(:erb, :editor)
+    get('/login') do
+      render(:erb, :login)
     end
 
-    get('/dash') do
-      @anchors = @@anchors
-      render(:erb, :dash)
+    get('/profile') do
+      render(:erb, :profile)
     end
+
 
     post('/dash') do
       anchor_update = {
@@ -106,7 +150,13 @@ class App < Sinatra::Base
                   logger.info@@anchors
                 end
 
+    get('/logout') do
+    session[:access_token] = nil
+    redirect to("/")
+  end
+
   #redirect to('/contact?sent=true')
 end
-end
-
+# @@profiles.push(profile_info)
+#   @@profiles.each_with_index do |profile,index|
+#   $redis.set("profiles:#{index}", profile.to_json)
