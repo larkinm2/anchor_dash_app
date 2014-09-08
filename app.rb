@@ -2,7 +2,10 @@ require 'sinatra/base'
 require 'httparty'
 require 'pry'
 require 'securerandom'
-require "twitter"
+require 'twitter'
+require 'yahoo_finance'
+require 'uri'
+require 'json'
 
 class App < Sinatra::Base
 
@@ -65,6 +68,11 @@ class App < Sinatra::Base
       wunderground_city = "Brooklyn"
       @wunderground_url = "#{wunderground_base}#{WUNDERGROUND_API_KEY}/forecast10day/q/#{wunderground_state}/#{wunderground_city}.json"
       @wunderground_response = HTTParty.get(@wunderground_url)
+
+
+      #Yahoo finance API
+      @data = YahooFinance.quotes(["GOOG","AAPL","FORD",], [:ask,:change])
+
       render(:erb, :index)
     end
 
