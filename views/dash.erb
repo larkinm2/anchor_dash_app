@@ -1,15 +1,11 @@
 <section id = "letters">
-    <ul>
       <% @anchors.each do |item| %>
-      <li>
-        <span>
           Weather Reporter: <%= item[:weather] %><br>
           Traffic Reporter: <%= item[:traffic] %><br>
           Sports Reporter: <%= item[:sports] %><br>
           Field Reporter: <%= item[:field_reporter] %><br>
           Editor's Note: <%= item[:editor_note] %><br>
           <br>
-      </li>
       <% end %>
     </ul>
 
@@ -75,6 +71,12 @@
       Apple: <%=@data[1].ask%> <%=@data[1].change%>
       <br>
       Ford: <%=@data[2].ask%> <%=@data[2].change%>
+
+      <br><br>
+
+      <% @tweets.each do |tweet|%>
+      <%= tweet %>
+      <% end %>
 </section>
 
 

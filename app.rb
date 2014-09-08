@@ -19,14 +19,8 @@ class App < Sinatra::Base
       enable :method_override
       enable :sessions
       @@anchors = []
+      @@profile = []
       TIMES_API_KEY = "13a4a6374ae75f76bb9b710c22d043cb:3:69767050"
-      TWITTER_API_KEY = "2MtCWbofOSqVAeA2umSVeW6qB"
-    #   twitter = {:consumer_key    => "2MtCWbofOSqVAeA2umSVeW6qB",
-    #   :consumer_secret => "A77U8WxMwiWgo6ruJHDtdVLOtsYSlvbO1TdIwQY2FchejC4Cjw"
-    #     }
-
-    #   client = Twitter::REST::Client.new(config)
-    # end
       WUNDERGROUND_API_KEY = "1a6e6fc49fe9c3f3"
     end
 
@@ -38,6 +32,15 @@ class App < Sinatra::Base
 
     after do
       logger.info "Response Headers: #{response.headers}"
+    end
+
+    #TWIT Auth
+
+    TWITTER_CLIENT = Twitter::REST::Client.new do |config|
+    config.consumer_key        = "H7ZqbFmKWLhIyFfkiabekM1QH"
+    config.consumer_secret     = "54dk4QDWcYHvPYQTGIVTYTb86dJopLMwATq8BATtAgmvqTJzv7"
+    config.access_token        = "612037497-y6VvEAUpsapY8bCFGVe71yD4qRqUJkfzYz4zbDYo"
+    config.access_token_secret = "ErLd7EncjzUAv7HZ89HYH157Xf3GKFV96iWkHw2goI8D8"
     end
 
   ########################
@@ -107,11 +110,10 @@ class App < Sinatra::Base
       @times_house = HTTParty.get(@time_url_house)
 
       #Twitter Api
-
-      # twitter_base_url = "https://api.twitter.com/1.1/search/tweets.json?"
-      # twitter_q = "senate"
-      # @twitter_url = "#{twitter_base_url}q=#{twitter_q}"
-      # @twitter = HTTParty.get(@twitter_url)
+      @tweets = []
+      TWITTER_CLIENT.search("senate", :result_type => "recent").take(5).each do |tweet|
+      @tweets.push(tweet.text)
+      end
 
       #Weather API
       wunderground_base = "http://api.wunderground.com/api/"
@@ -148,6 +150,7 @@ class App < Sinatra::Base
 
                   @@anchors.push(anchor_update)
                   logger.info@@anchors
+
                 end
 
     get('/logout') do
@@ -155,7 +158,29 @@ class App < Sinatra::Base
     redirect to("/")
   end
 
-  #redirect to('/contact?sent=true')
+  get('/profile/:id') do
+    render(:erb, :profile)
+  end
+
+  post('/profile/:id') do
+
+    update_profile = {
+      :name               => params[:name],
+      :city               => params[:city],
+      :picture_link       => params[:picture_link],
+      :five_day_forecast  => params[:five_day_forecast],
+      :house_bills        => params[:house_bills],
+      :senate_bills       => params[:senate_bills],
+      :top_stocks         => params[:top_stocks]
+
+                  }
+
+                  @@profile.push(update_profile)
+                  logger.info@@profile
+      render(:erb, :profiles)
+
+  end
+
 end
 # @@profiles.push(profile_info)
 #   @@profiles.each_with_index do |profile,index|

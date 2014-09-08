@@ -1,7 +1,7 @@
 <section id="profileform">
   <h2>Profile Form</h2>
 
-  <form method="POST" action="/dash">
+  <form method="POST" action="/profile/:id">
     <label for="name">Name </label>
     <input type="text" name="name" id="toaddress" />
     <br/><br/>
@@ -17,10 +17,11 @@
     <br/><br/>
 
     <label for="message">
-        <input type="checkbox" name="five_day_forecast" value = "Five Day Forecast">Five-Day forecast</input>
-        <input type="checkbox" name="house_bills" value = "House Bills">House Bills</input>
-        <input type="checkbox" name="senate_bills" value = "Senate Bills">Senate Bills</input>
-        <input type="checkbox" name="top_stocks" value = "Top Stocks">Top Stocks</input>
+        <input type="checkbox" name="five_day_forecast" value = "Five Day Forecast" checked>Five-Day forecast</input>
+        <input type="checkbox" name="house_bills" value = "House Bills"checked>House Bills</input>
+        <input type="checkbox" name="senate_bills" value = "Senate Bills"
+        checked>Senate Bills</input>
+        <input type="checkbox" name="top_stocks" value = "Top Stocks"checked>Top Stocks</input>
 
       </select>
         <br>
