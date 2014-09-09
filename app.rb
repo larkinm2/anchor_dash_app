@@ -7,6 +7,7 @@ require 'yahoo_finance'
 require 'uri'
 require 'json'
 require 'securerandom'
+require 'redis'
 
 class App < Sinatra::Base
 
@@ -131,7 +132,7 @@ class App < Sinatra::Base
       render(:erb, :dash)
   end
 
-  get('/profile/edit')
+  get('/profile/edit') do
     render(:erb, :profile_form)
   end
 
@@ -158,6 +159,7 @@ class App < Sinatra::Base
       :weather            => params[:weather]
 
                   }
+
 
   @@profiles.push(update_profile)
 

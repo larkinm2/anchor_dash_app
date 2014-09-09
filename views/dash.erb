@@ -1,13 +1,4 @@
 <section id = "dash">
-<!--       <% @anchors.each do |item| %>
-          Weather Reporter: <%= item[:weather] %><br>
-          Traffic Reporter: <%= item[:traffic] %><br>
-          Sports Reporter: <%= item[:sports] %><br>
-          Field Reporter: <%= item[:field_reporter] %><br>
-          Editor's Note: <%= item[:editor_note] %><br>
-          <br>
-      <% end %>
-    </ul> -->
 
     <% if @user_one["senate_bills"] %>
     <div id="one">
@@ -27,6 +18,7 @@
       <%= @times_senate["results"]["votes"][0]["result"]%>
       <br><br><br>
     </div>
+    <% end %>
 
 
 
@@ -48,6 +40,7 @@
       <%= @times_house["results"]["votes"][0]["result"]%>
     </div>
 </ul>
+<% end %>
 
       <% if @user_one["weather"] %>
       <div id="three">
@@ -72,6 +65,7 @@
         </div>
 
       </ul>
+      <% end %>
 
 
       <br><br>
@@ -83,6 +77,7 @@
       <br>
       Ford: <%=@data[2].ask%> <%=@data[2].change%>
     </div>
+    <% end %>
 
       <br><br>
     <% if @user_one["twitter"] %>
@@ -91,6 +86,7 @@
       <%= tweet %>
       <% end %>
     </div>
+    <% end %>
 </section>
 
 
