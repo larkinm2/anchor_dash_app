@@ -19,7 +19,14 @@ class App < Sinatra::Base
       enable :method_override
       enable :sessions
       @@anchors = []
-      @@profile = []
+      @@profiles = []
+      # enable :logging
+      # enable :method_override
+      # enable :sessions
+      # uri = URI.parse(ENV["REDISTOGO_URL"])
+      # $redis = Redis.new({:host => uri.host,
+      #                     :port => uri.port,
+      #                     :password => uri.password})
       TIMES_API_KEY = "13a4a6374ae75f76bb9b710c22d043cb:3:69767050"
       WUNDERGROUND_API_KEY = "1a6e6fc49fe9c3f3"
     end
@@ -43,9 +50,7 @@ class App < Sinatra::Base
     config.access_token_secret = "ErLd7EncjzUAv7HZ89HYH157Xf3GKFV96iWkHw2goI8D8"
     end
 
-  ########################
-  # Routes
-  ########################
+
 
       CLIENT_ID     = "3dcc9e47c28497168cbb"
       CLIENT_SECRET = "d64574063caf092355ffcc0499a75ea531a46eec"
@@ -53,12 +58,10 @@ class App < Sinatra::Base
 
     get('/') do
     base_url = "https://github.com/login/oauth/authorize"
-    scope = "user"
-    # generate a random string of characters
+      scope = "user"
+
     state = SecureRandom.urlsafe_base64
-    # storing state in session because we need to compare it in a later request
     session[:state] = state
-    # turn the hash into a query string
     query_params = URI.encode_www_form({
                                         :client_id    => CLIENT_ID,
                                         :scope        => scope,
@@ -66,15 +69,15 @@ class App < Sinatra::Base
                                         :state        => state
                                        })
     @url = base_url + "?" + query_params
-    render(:erb, :index)
-  end
+      render(:erb, :index)
+    end
 
-  get('/oauth_callback') do
-    code = params[:code]
-    # compare the states to ensure the information is from who we think it is
-    if session[:state] == params[:state]
-      # send a POST
-      response = HTTParty.post("https://github.com/login/oauth/access_token",
+    get('/oauth_callback') do
+      code = params[:code]
+
+        if session[:state] == params[:state]
+
+        response = HTTParty.post("https://github.com/login/oauth/access_token",
                                :body => {
                                            :client_id     => CLIENT_ID,
                                            :client_secret => CLIENT_SECRET,
@@ -86,8 +89,8 @@ class App < Sinatra::Base
                                            })
       session[:access_token] = response["access_token"]
     end
-    redirect to("/profile")
-  end
+    redirect to("/profile_form")
+    end
 
 
 
@@ -97,6 +100,9 @@ class App < Sinatra::Base
     end
 
     get('/dash') do
+
+      @user_one = JSON.parse($redis["profiles:0"])
+
       #Ny Times Senate vote API
       time_base_url = "http://api.nytimes.com/svc/politics/3/us/legislative/congress/"
       time_chamber_senate = "senate"
@@ -122,66 +128,81 @@ class App < Sinatra::Base
       @wunderground_url = "#{wunderground_base}#{WUNDERGROUND_API_KEY}/forecast10day/q/#{wunderground_state}/#{wunderground_city}.json"
       @wunderground_response = HTTParty.get(@wunderground_url)
 
-
       #Yahoo finance API
       @data = YahooFinance.quotes(["GOOG","AAPL","FORD",], [:ask,:change])
       #Github address for yahoo finance gem -- "https://github.com/herval/yahoo-finance/blob/master/README.md"
-      @anchors = @@anchors
+      #@anchors = @@anchors
       render(:erb, :dash)
     end
 
-    get('/login') do
-      render(:erb, :login)
+    get('/profile/edit')
+      render(:erb, :profile_form)
     end
-
-    get('/profile') do
-      render(:erb, :profile)
-    end
-
-
-    post('/dash') do
-      anchor_update = {
-      :weather        => params[:weather],
-      :traffic        => params[:traffic],
-      :sports         => params[:sports],
-      :field_reporter => params[:field_reporter],
-      :editor_note    => params[:editor_note]
-                  }
-
-                  @@anchors.push(anchor_update)
-                  logger.info@@anchors
-
-                end
 
     get('/logout') do
-    session[:access_token] = nil
-    redirect to("/")
-  end
+      session[:access_token] = nil
+        redirect to("/")
+    end
 
-  get('/profile/:id') do
-    render(:erb, :profile)
-  end
+    # post('/dash') do
+    #   anchor_update = {
+    #     :weather        => params[:weather],
+    #     :traffic        => params[:traffic],
+    #     :sports         => params[:sports],
+    #     :field_reporter => params[:field_reporter],
+    #     :editor_note    => params[:editor_note]
+    #               }
 
-  post('/profile/:id') do
+    #               @@anchors.push(anchor_update)
+    #               logger.info@@anchors
 
+    # end
+
+    get('/profile/edit') do
+        render(:erb, :profile_form)
+    end
+
+    post('/profile/new') do
     update_profile = {
-      :name               => params[:name],
-      :city               => params[:city],
-      :picture_link       => params[:picture_link],
-      :five_day_forecast  => params[:five_day_forecast],
+      :username           => params[:username],
+      :email              => params[:user_email],
+      :user_city          => params[:user_city],
+      :user_state         => params[:user_state],
+      :user_img           => params[:user_img],
       :house_bills        => params[:house_bills],
       :senate_bills       => params[:senate_bills],
-      :top_stocks         => params[:top_stocks]
+      :top_stocks         => params[:top_stocks],
+      :twitter            => params[:twitter],
+      :weather            => params[:weather]
 
                   }
 
-                  @@profile.push(update_profile)
-                  logger.info@@profile
-      render(:erb, :profiles)
+      @@profiles.push(profile_info)
+        @@profiles.each_with_index do |profile, index|
+          $redis.set("profiles:#{index}", profile.to_json)
+        end
 
+        logger.info@@profile
+        redirect to("/")
+
+
+
+    get("/profile") do
+      @profiles = @@profiles
+      render(:erb, :profile, :template => :layout)
+    end
+
+  get("/profile/:id") do
+    @profiles = @@profiles
+    @index = params[:id].to_i - 1
+    render(:erb, :user_profile, :template => :layout)
   end
 
+  get ('/profile_form') do
+    render(:erb, :profile_form)
+  end
 end
+
 # @@profiles.push(profile_info)
 #   @@profiles.each_with_index do |profile,index|
 #   $redis.set("profiles:#{index}", profile.to_json)

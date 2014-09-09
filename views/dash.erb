@@ -1,5 +1,5 @@
-<section id = "letters">
-      <% @anchors.each do |item| %>
+<section id = "dash">
+<!--       <% @anchors.each do |item| %>
           Weather Reporter: <%= item[:weather] %><br>
           Traffic Reporter: <%= item[:traffic] %><br>
           Sports Reporter: <%= item[:sports] %><br>
@@ -7,8 +7,10 @@
           Editor's Note: <%= item[:editor_note] %><br>
           <br>
       <% end %>
-    </ul>
+    </ul> -->
 
+  <% if @user_one["senate_bills"] %>
+  <div id="one">
           Senate Bills<br>
       Bill Description:
       <%= @times_senate["results"]["votes"][0]["description"]%>
@@ -24,10 +26,12 @@
       Result:
       <%= @times_senate["results"]["votes"][0]["result"]%>
       <br><br><br>
+    </div>
 
 
 
-
+  <% if @user_one["weather"] %>
+  <div id="two">
       House Bills<br>
       Bill Description:
       <%= @times_house["results"]["votes"][0]["description"]%>
@@ -42,8 +46,10 @@
       <br><br>
       Result:
       <%= @times_house["results"]["votes"][0]["result"]%>
+</ul>
 
-    </ul>
+      <% if @user_one["weather"] %>
+      <div id="three">
       <% forecast = @wunderground_response["forecast"]["txt_forecast"]["forecastday"].first(12) %>
       <ul>
 
@@ -65,15 +71,18 @@
 
       </ul>
       <br><br>
-
+    <% if @user_one["top_stocks"] %>
+    <div id="five">
       Google: <%=@data[0].ask%> <%=@data[0].change%>
       <br>
       Apple: <%=@data[1].ask%> <%=@data[1].change%>
       <br>
       Ford: <%=@data[2].ask%> <%=@data[2].change%>
+    </div>
 
       <br><br>
-
+    <% if @user_one["twitter"] %>
+  <div id="five">
       <% @tweets.each do |tweet|%>
       <%= tweet %>
       <% end %>
