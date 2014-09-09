@@ -59,8 +59,7 @@ class App < Sinatra::Base
   get('/') do
     base_url = "https://github.com/login/oauth/authorize"
     scope = "user"
-
-  state = SecureRandom.urlsafe_base64
+    state = SecureRandom.urlsafe_base64
     session[:state] = state
       query_params = URI.encode_www_form({
                                             :client_id    => CLIENT_ID,
@@ -69,7 +68,7 @@ class App < Sinatra::Base
                                             :state        => state
                                        })
   @url = base_url + "?" + query_params
-    render(:erb, :index)
+  render(:erb, :index)
   end
 
   get('/oauth_callback') do
@@ -87,8 +86,8 @@ class App < Sinatra::Base
                                            })
         session[:access_token] = response["access_token"]
     end
-    redirect to("/profile_form")
-    end
+  redirect to("/profile_form")
+  end
 
 
 
@@ -139,7 +138,7 @@ class App < Sinatra::Base
 
   get('/logout') do
     session[:access_token] = nil
-      redirect to("/")
+    redirect to("/")
   end
 
     # post('/dash') do
@@ -181,7 +180,8 @@ class App < Sinatra::Base
   end
 
   logger.info@@profiles
-  redirect to("/")
+  redirect to("/")##need to make a thanks for registering page here
+  end
 
 
 
