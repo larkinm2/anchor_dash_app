@@ -18,15 +18,14 @@ class App < Sinatra::Base
     enable :logging
     enable :method_override
     enable :sessions
-    @@anchors = []
     @@profiles = []
-      # enable :logging
-      # enable :method_override
-      # enable :sessions
-      # uri = URI.parse(ENV["REDISTOGO_URL"])
-      # $redis = Redis.new({:host => uri.host,
-      #                     :port => uri.port,
-      #                     :password => uri.password})
+      enable :logging
+      enable :method_override
+      enable :sessions
+      uri = URI.parse(ENV["REDISTOGO_URL"])
+      $redis = Redis.new({:host => uri.host,
+                          :port => uri.port,
+                          :password => uri.password})
     TIMES_API_KEY = "13a4a6374ae75f76bb9b710c22d043cb:3:69767050"
     WUNDERGROUND_API_KEY = "1a6e6fc49fe9c3f3"
   end
@@ -67,8 +66,8 @@ class App < Sinatra::Base
                                             :redirect_uri => CALLBACK_URL,
                                             :state        => state
                                        })
-  @url = base_url + "?" + query_params
-  render(:erb, :index)
+    @url = base_url + "?" + query_params
+    render(:erb, :index)
   end
 
   get('/oauth_callback') do
@@ -85,7 +84,7 @@ class App < Sinatra::Base
                                              "Accept" => "application/json"
                                            })
         session[:access_token] = response["access_token"]
-    end
+      end
   redirect to("/profile_form")
   end
 
@@ -130,7 +129,7 @@ class App < Sinatra::Base
       #Github address for yahoo finance gem -- "https://github.com/herval/yahoo-finance/blob/master/README.md"
       #@anchors = @@anchors
       render(:erb, :dash)
-    end
+  end
 
   get('/profile/edit')
     render(:erb, :profile_form)
@@ -141,22 +140,8 @@ class App < Sinatra::Base
     redirect to("/")
   end
 
-    # post('/dash') do
-    #   anchor_update = {
-    #     :weather        => params[:weather],
-    #     :traffic        => params[:traffic],
-    #     :sports         => params[:sports],
-    #     :field_reporter => params[:field_reporter],
-    #     :editor_note    => params[:editor_note]
-    #               }
-
-    #               @@anchors.push(anchor_update)
-    #               logger.info@@anchors
-
-    # end
-
   get('/profile/edit') do
-      render(:erb, :profile_form)
+    render(:erb, :profile_form)
   end
 
   post('/profile/new') do
@@ -175,8 +160,9 @@ class App < Sinatra::Base
                   }
 
   @@profiles.push(update_profile)
-    @@profiles.each_with_index do |profile, index|
-      $redis.set("profiles:#{index}", profile.to_json)
+
+  @@profiles.each_with_index do |profile, index|
+    $redis.set("profiles:#{index}", profile.to_json)
   end
 
   logger.info@@profiles
@@ -187,13 +173,13 @@ class App < Sinatra::Base
 
   get("/profile") do
     @profiles = @@profiles
-      render(:erb, :profile, :template => :layout)
+    render(:erb, :profile, :template => :layout)
   end
 
   get("/profile/:id") do
     @profiles = @@profiles
-      @index = params[:id].to_i - 1
-        render(:erb, :user_profile, :template => :layout)
+    @index = params[:id].to_i - 1
+    render(:erb, :user_profile, :template => :layout)
   end
 
   get ('/profile_form') do
