@@ -14,12 +14,12 @@ class App < Sinatra::Base
   # Configuration
   ########################
 
-    configure do
-      enable :logging
-      enable :method_override
-      enable :sessions
-      @@anchors = []
-      @@profiles = []
+  configure do
+    enable :logging
+    enable :method_override
+    enable :sessions
+    @@anchors = []
+    @@profiles = []
       # enable :logging
       # enable :method_override
       # enable :sessions
@@ -27,56 +27,54 @@ class App < Sinatra::Base
       # $redis = Redis.new({:host => uri.host,
       #                     :port => uri.port,
       #                     :password => uri.password})
-      TIMES_API_KEY = "13a4a6374ae75f76bb9b710c22d043cb:3:69767050"
-      WUNDERGROUND_API_KEY = "1a6e6fc49fe9c3f3"
-    end
+    TIMES_API_KEY = "13a4a6374ae75f76bb9b710c22d043cb:3:69767050"
+    WUNDERGROUND_API_KEY = "1a6e6fc49fe9c3f3"
+  end
 
 
-    before do
-      logger.info "Request Headers: #{headers}"
-      logger.warn "Params: #{params}"
-    end
+  before do
+    logger.info "Request Headers: #{headers}"
+    logger.warn "Params: #{params}"
+  end
 
-    after do
-      logger.info "Response Headers: #{response.headers}"
-    end
+  after do
+     logger.info "Response Headers: #{response.headers}"
+  end
 
     #TWIT Auth
 
-    TWITTER_CLIENT = Twitter::REST::Client.new do |config|
+  TWITTER_CLIENT = Twitter::REST::Client.new do |config|
     config.consumer_key        = "H7ZqbFmKWLhIyFfkiabekM1QH"
     config.consumer_secret     = "54dk4QDWcYHvPYQTGIVTYTb86dJopLMwATq8BATtAgmvqTJzv7"
     config.access_token        = "612037497-y6VvEAUpsapY8bCFGVe71yD4qRqUJkfzYz4zbDYo"
     config.access_token_secret = "ErLd7EncjzUAv7HZ89HYH157Xf3GKFV96iWkHw2goI8D8"
-    end
+  end
 
 
 
-      CLIENT_ID     = "3dcc9e47c28497168cbb"
-      CLIENT_SECRET = "d64574063caf092355ffcc0499a75ea531a46eec"
-      CALLBACK_URL  = "http://127.0.0.1:9292/oauth_callback"
+  CLIENT_ID     = "3dcc9e47c28497168cbb"
+  CLIENT_SECRET = "d64574063caf092355ffcc0499a75ea531a46eec"
+  CALLBACK_URL  = "http://127.0.0.1:9292/oauth_callback"
 
-    get('/') do
+  get('/') do
     base_url = "https://github.com/login/oauth/authorize"
-      scope = "user"
+    scope = "user"
 
-    state = SecureRandom.urlsafe_base64
+  state = SecureRandom.urlsafe_base64
     session[:state] = state
-    query_params = URI.encode_www_form({
-                                        :client_id    => CLIENT_ID,
-                                        :scope        => scope,
-                                        :redirect_uri => CALLBACK_URL,
-                                        :state        => state
+      query_params = URI.encode_www_form({
+                                            :client_id    => CLIENT_ID,
+                                            :scope        => scope,
+                                            :redirect_uri => CALLBACK_URL,
+                                            :state        => state
                                        })
-    @url = base_url + "?" + query_params
-      render(:erb, :index)
-    end
+  @url = base_url + "?" + query_params
+    render(:erb, :index)
+  end
 
-    get('/oauth_callback') do
+  get('/oauth_callback') do
       code = params[:code]
-
-        if session[:state] == params[:state]
-
+      if session[:state] == params[:state]
         response = HTTParty.post("https://github.com/login/oauth/access_token",
                                :body => {
                                            :client_id     => CLIENT_ID,
@@ -87,7 +85,7 @@ class App < Sinatra::Base
                                :headers => {
                                              "Accept" => "application/json"
                                            })
-      session[:access_token] = response["access_token"]
+        session[:access_token] = response["access_token"]
     end
     redirect to("/profile_form")
     end
@@ -95,13 +93,13 @@ class App < Sinatra::Base
 
 
 
-    get('/editor') do
-      render(:erb, :editor)
-    end
+  get('/editor') do
+    render(:erb, :editor)
+  end
 
-    get('/dash') do
+  get('/dash') do
 
-      @user_one = JSON.parse($redis["profiles:0"])
+    @user_one = JSON.parse($redis["profiles:0"])
 
       #Ny Times Senate vote API
       time_base_url = "http://api.nytimes.com/svc/politics/3/us/legislative/congress/"
@@ -118,7 +116,7 @@ class App < Sinatra::Base
       #Twitter Api
       @tweets = []
       TWITTER_CLIENT.search("senate", :result_type => "recent").take(5).each do |tweet|
-      @tweets.push(tweet.text)
+          @tweets.push(tweet.text)
       end
 
       #Weather API
@@ -135,14 +133,14 @@ class App < Sinatra::Base
       render(:erb, :dash)
     end
 
-    get('/profile/edit')
-      render(:erb, :profile_form)
-    end
+  get('/profile/edit')
+    render(:erb, :profile_form)
+  end
 
-    get('/logout') do
-      session[:access_token] = nil
-        redirect to("/")
-    end
+  get('/logout') do
+    session[:access_token] = nil
+      redirect to("/")
+  end
 
     # post('/dash') do
     #   anchor_update = {
@@ -158,11 +156,11 @@ class App < Sinatra::Base
 
     # end
 
-    get('/profile/edit') do
-        render(:erb, :profile_form)
-    end
+  get('/profile/edit') do
+      render(:erb, :profile_form)
+  end
 
-    post('/profile/new') do
+  post('/profile/new') do
     update_profile = {
       :username           => params[:username],
       :email              => params[:user_email],
@@ -177,25 +175,25 @@ class App < Sinatra::Base
 
                   }
 
-      @@profiles.push(profile_info)
-        @@profiles.each_with_index do |profile, index|
-          $redis.set("profiles:#{index}", profile.to_json)
-        end
+  @@profiles.push(update_profile)
+    @@profiles.each_with_index do |profile, index|
+      $redis.set("profiles:#{index}", profile.to_json)
+  end
 
-        logger.info@@profile
-        redirect to("/")
+  logger.info@@profiles
+  redirect to("/")
 
 
 
-    get("/profile") do
-      @profiles = @@profiles
+  get("/profile") do
+    @profiles = @@profiles
       render(:erb, :profile, :template => :layout)
-    end
+  end
 
   get("/profile/:id") do
     @profiles = @@profiles
-    @index = params[:id].to_i - 1
-    render(:erb, :user_profile, :template => :layout)
+      @index = params[:id].to_i - 1
+        render(:erb, :user_profile, :template => :layout)
   end
 
   get ('/profile_form') do

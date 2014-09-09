@@ -9,8 +9,8 @@
       <% end %>
     </ul> -->
 
-  <% if @user_one["senate_bills"] %>
-  <div id="one">
+    <% if @user_one["senate_bills"] %>
+    <div id="one">
           Senate Bills<br>
       Bill Description:
       <%= @times_senate["results"]["votes"][0]["description"]%>
@@ -30,8 +30,8 @@
 
 
 
-  <% if @user_one["weather"] %>
-  <div id="two">
+    <% if @user_one["weather"] %>
+    <div id="two">
       House Bills<br>
       Bill Description:
       <%= @times_house["results"]["votes"][0]["description"]%>
@@ -46,6 +46,7 @@
       <br><br>
       Result:
       <%= @times_house["results"]["votes"][0]["result"]%>
+    </div>
 </ul>
 
       <% if @user_one["weather"] %>
@@ -68,11 +69,14 @@
         <br>
           <%=forecast[8]["title"]%>:
           <%=forecast[8]["fcttext"]%>
+        </div>
 
       </ul>
+
+
       <br><br>
     <% if @user_one["top_stocks"] %>
-    <div id="five">
+    <div id="four">
       Google: <%=@data[0].ask%> <%=@data[0].change%>
       <br>
       Apple: <%=@data[1].ask%> <%=@data[1].change%>
@@ -86,6 +90,7 @@
       <% @tweets.each do |tweet|%>
       <%= tweet %>
       <% end %>
+    </div>
 </section>
 
 
