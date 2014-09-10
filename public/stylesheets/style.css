@@ -1,6 +1,7 @@
 
 body {
-    background-color: grey;
+    background-color: #efefef;
+
 }
 
 a:link{
@@ -28,21 +29,21 @@ div.widget, div.sub-widget {
 
 .senate {
   width: 200px;
-  height:200px;
+  height:207px;
   text-align: center;
   border: 3px solid blue;
-  background-color: white;
-  border-radius: 15px;
+  background-color: #E4E4E4;
+  border-radius: 10px;
   overflow: scroll
 }
 
 .house {
   width: 200px;
-  height: 200px;
+  height: 207px;
   text-align: center;
-  background-color: white;
-  border-radius: 15px;
+  border-radius: 10px;
   border: 3px solid red;
+  background-color: #E4E4E4;
   overflow: scroll
 }
 
@@ -50,21 +51,23 @@ div.widget, div.sub-widget {
   float: left;
   padding-right: 50px;
   width:450px;
-  height: 400px;
-  border-radius: 15px;
+  height: 420px;
+  border-radius: 10px;
   text-align: center;
-  background-color: white;
+  background-color: #E4E4E4;
   border: 3px solid yellow;
+
+
  }
 
 .stocks {
   width:200px;
-  height:400px;
+  height:420px;
   text-align: center;
   border: 3px solid green;
-  margin-top: 5px;
-  background-color: white;
-  border-radius: 15px;
+  background-color: #E4E4E4;
+  border-radius: 10px;
+  float: right;
 }
 
 #five{

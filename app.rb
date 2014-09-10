@@ -129,7 +129,7 @@ class App < Sinatra::Base
       @wunderground_response = HTTParty.get(@wunderground_url)
 
       #Yahoo finance API
-      @data = YahooFinance.quotes(["GOOG","AAPL","F","CMCSK","MSFT","YHOO","%5EGSPC", "%5EIXIC"], [:last_trade_price,:change])
+      @data = YahooFinance.quotes(["GOOG","AAPL","F","CMCSK","MSFT","YHOO","%5EGSPC", "%5EIXIC", "BAC", "EBAY", "SIRI", "TWTR"], [:last_trade_price,:change])
       #Github address for yahoo finance gem -- "https://github.com/herval/yahoo-finance/blob/master/README.md"
       #@anchors = @@anchors
       render(:erb, :dash, :template =>:layout)

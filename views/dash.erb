@@ -87,9 +87,9 @@
     <% if @user_one["top_stocks"] %>
     <div id="four" class="stocks widget">
 
-      Nasdaq: <%=@data[7].last_trade_price%> <%=@data[7].change%>
-            <br><br>
       S&P: <%=@data[6].last_trade_price%> <%=@data[6].change%>
+      <br><br>
+      Nasdaq: <%=@data[7].last_trade_price%> <%=@data[7].change%>
       <br><br>
       Google: <%=@data[0].last_trade_price%> <%=@data[0].change%>
       <br><br>
@@ -101,7 +101,14 @@
       <br><br>
       Ford: <%=@data[2].last_trade_price%> <%=@data[2].change%>
       <br><br>
-      Comcast: <%=@data[3].last_trade_price%> <%=@data[3].change%>
+      Bank of America: <%=@data[3].last_trade_price%> <%=@data[3].change%>
+      <br><br>
+      EBAY: <%=@data[3].last_trade_price%> <%=@data[3].change%>
+      <br><br>
+      SIRUS XM: <%=@data[3].last_trade_price%> <%=@data[3].change%>
+      <br><br>
+      Twitter: <%=@data[3].last_trade_price%> <%=@data[3].change%>
+
     </div>
     <% end %>
 
