@@ -1,13 +1,11 @@
 require 'sinatra/base'
 require 'httparty'
-require 'pry'
 require 'securerandom'
 require 'twitter'
 require 'yahoo_finance'
 require 'uri'
 require 'json'
 require 'securerandom'
-require 'redis'
 
 class App < Sinatra::Base
 

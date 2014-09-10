@@ -11,7 +11,6 @@ gem 'yahoo-finance'
 
 # only used in development locally
 group :development do
-  gem 'pry'
   gem 'shotgun'
 end
 
