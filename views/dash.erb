@@ -1,65 +1,80 @@
-<section id = "dash">
-
+<header>
+<a href="/"><h2>Anchor Dash</h2></a>
+<table style="float:right; margin-top:-150px;">
+  <thead>
+    <th>
+      <% if session["access_token"] %>
+      <a href="/profile/1"><p>profile.&nbsp;//</p></a>
+      </th>
+      <th>
+      <a href="/logout"><p>logout.</p></a>
+      </th>
+    <% end %>
+  </thead>
+</table>
+</header>
+<div class="widget-wrapper">
+  <div class="congress widget">
     <% if @user_one["senate_bills"] %>
-    <div id="one">
-          Senate Bills<br>
-      Bill Description:
-      <%= @times_senate["results"]["votes"][0]["description"]%>
-      <br><br>
-      Democratic Vote<br>
-      Yes: <%= @times_senate["results"]["votes"][0]["democratic"]["yes"]%>
-      No: <%= @times_senate["results"]["votes"][0]["democratic"]["no"]%>
-      <br><br>
-      Republican Vote<br>
-      Yes: <%= @times_senate["results"]["votes"][0]["republican"]["yes"]%>
-      No: <%= @times_senate["results"]["votes"][0]["republican"]["no"]%>
-      <br><br>
-      Result:
-      <%= @times_senate["results"]["votes"][0]["result"]%>
-      <br><br><br>
-    </div>
+      <div id="one" class="senate sub-widget">
+            Senate Bills<br>
+        Bill Description:
+        <%= @times_senate["results"]["votes"][0]["description"]%>
+        <br><br>
+        Democratic Vote<br>
+        Yes: <%= @times_senate["results"]["votes"][0]["democratic"]["yes"]%>
+        No: <%= @times_senate["results"]["votes"][0]["democratic"]["no"]%>
+        <br><br>
+        Republican Vote<br>
+        Yes: <%= @times_senate["results"]["votes"][0]["republican"]["yes"]%>
+        No: <%= @times_senate["results"]["votes"][0]["republican"]["no"]%>
+        <br><br>
+        Result:
+        <%= @times_senate["results"]["votes"][0]["result"]%>
+        <br><br><br>
+      </div>
     <% end %>
 
-
+    <% if @user_one["house_bills"] %>
+      <div id="two" class="house sub-widget">
+        House Bills<br>
+        Bill Description:
+        <%= @times_house["results"]["votes"][0]["description"]%>
+        <br><br>
+        Democratic Vote<br>
+        Yes: <%= @times_house["results"]["votes"][0]["democratic"]["yes"]%>
+        No: <%= @times_house["results"]["votes"][0]["democratic"]["no"]%>
+        <br><br>
+        Republican Vote<br>
+        Yes: <%= @times_house["results"]["votes"][0]["republican"]["yes"]%>
+        No: <%= @times_house["results"]["votes"][0]["republican"]["no"]%>
+        <br><br>
+        Result:
+        <%= @times_house["results"]["votes"][0]["result"]%>
+      </div>
+    <% end %>
+  </div>
 
     <% if @user_one["weather"] %>
-    <div id="two">
-      House Bills<br>
-      Bill Description:
-      <%= @times_house["results"]["votes"][0]["description"]%>
-      <br><br>
-      Democratic Vote<br>
-      Yes: <%= @times_house["results"]["votes"][0]["democratic"]["yes"]%>
-      No: <%= @times_house["results"]["votes"][0]["democratic"]["no"]%>
-      <br><br>
-      Republican Vote<br>
-      Yes: <%= @times_house["results"]["votes"][0]["republican"]["yes"]%>
-      No: <%= @times_house["results"]["votes"][0]["republican"]["no"]%>
-      <br><br>
-      Result:
-      <%= @times_house["results"]["votes"][0]["result"]%>
-    </div>
-</ul>
-<% end %>
+      <div id="three" class="weather widget">
+        <% forecast = @wunderground_response["forecast"]["txt_forecast"]["forecastday"].first(12) %>
+        <ul>
 
-      <% if @user_one["weather"] %>
-      <div id="three">
-      <% forecast = @wunderground_response["forecast"]["txt_forecast"]["forecastday"].first(12) %>
-      <ul>
+                 Five Day Forecast<br><br>
 
           <%=forecast[0]["title"]%>:
           <%=forecast[0]["fcttext"]%>
-        <br>
+        <br><br><br>
 
           <%=forecast[2]["title"]%>:
           <%=forecast[2]["fcttext"]%>
-        <br>
+        <br><br><br>
           <%=forecast[4]["title"]%>:
           <%=forecast[4]["fcttext"]%>
-        <br>
+        <br><br><br>
           <%=forecast[6]["title"]%>:
           <%=forecast[6]["fcttext"]%>
-        <br>
+        <br><br><br>
           <%=forecast[8]["title"]%>:
           <%=forecast[8]["fcttext"]%>
         </div>
@@ -68,18 +83,29 @@
       <% end %>
 
 
-      <br><br>
+
     <% if @user_one["top_stocks"] %>
-    <div id="four">
-      Google: <%=@data[0].ask%> <%=@data[0].change%>
-      <br>
-      Apple: <%=@data[1].ask%> <%=@data[1].change%>
-      <br>
-      Ford: <%=@data[2].ask%> <%=@data[2].change%>
+    <div id="four" class="stocks widget">
+
+      Nasdaq: <%=@data[7].last_trade_price%> <%=@data[7].change%>
+            <br><br>
+      S&P: <%=@data[6].last_trade_price%> <%=@data[6].change%>
+      <br><br>
+      Google: <%=@data[0].last_trade_price%> <%=@data[0].change%>
+      <br><br>
+      Apple: <%=@data[1].last_trade_price%> <%=@data[1].change%>
+      <br><br>
+      Microsoft: <%=@data[4].last_trade_price%> <%=@data[4].change%>
+      <br><br>
+      Yahoo: <%=@data[5].last_trade_price%> <%=@data[5].change%>
+      <br><br>
+      Ford: <%=@data[2].last_trade_price%> <%=@data[2].change%>
+      <br><br>
+      Comcast: <%=@data[3].last_trade_price%> <%=@data[3].change%>
     </div>
     <% end %>
 
-      <br><br>
+
     <% if @user_one["twitter"] %>
   <div id="five">
       <% @tweets.each do |tweet|%>
@@ -87,6 +113,6 @@
       <% end %>
     </div>
     <% end %>
-</section>
+</div>
 
 

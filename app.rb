@@ -11,6 +11,9 @@ require 'redis'
 
 class App < Sinatra::Base
 
+
+
+
   ########################
   # Configuration
   ########################
@@ -27,6 +30,7 @@ class App < Sinatra::Base
       $redis = Redis.new({:host => uri.host,
                           :port => uri.port,
                           :password => uri.password})
+      $redis.flushdb
     TIMES_API_KEY = "13a4a6374ae75f76bb9b710c22d043cb:3:69767050"
     WUNDERGROUND_API_KEY = "1a6e6fc49fe9c3f3"
   end
@@ -86,14 +90,14 @@ class App < Sinatra::Base
                                            })
         session[:access_token] = response["access_token"]
       end
-  redirect to("/profile_form")
+  redirect to("/profile/edit")
   end
 
 
 
 
   get('/editor') do
-    render(:erb, :editor)
+    render(:erb, :editor, :template =>:layout)
   end
 
   get('/dash') do
@@ -126,14 +130,14 @@ class App < Sinatra::Base
       @wunderground_response = HTTParty.get(@wunderground_url)
 
       #Yahoo finance API
-      @data = YahooFinance.quotes(["GOOG","AAPL","FORD",], [:ask,:change])
+      @data = YahooFinance.quotes(["GOOG","AAPL","F","CMCSK","MSFT","YHOO","%5EGSPC", "%5EIXIC"], [:last_trade_price,:change])
       #Github address for yahoo finance gem -- "https://github.com/herval/yahoo-finance/blob/master/README.md"
       #@anchors = @@anchors
-      render(:erb, :dash)
+      render(:erb, :dash, :template =>:layout)
   end
 
   get('/profile/edit') do
-    render(:erb, :profile_form)
+    render(:erb, :profile_form, :template =>:layout)
   end
 
   get('/logout') do
@@ -142,7 +146,7 @@ class App < Sinatra::Base
   end
 
   get('/profile/edit') do
-    render(:erb, :profile_form)
+    render(:erb, :profile_form, :template =>:layout)
   end
 
   post('/profile/new') do
@@ -168,7 +172,7 @@ class App < Sinatra::Base
   end
 
   logger.info@@profiles
-  redirect to("/")##need to make a thanks for registering page here
+  redirect to("/dash")##need to make a thanks for registering page here
   end
 
 
@@ -185,7 +189,7 @@ class App < Sinatra::Base
   end
 
   get ('/profile_form') do
-    render(:erb, :profile_form)
+    render(:erb, :profile_form, :template => :layout)
   end
 end
 
