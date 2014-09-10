@@ -6,6 +6,7 @@ require 'yahoo_finance'
 require 'uri'
 require 'json'
 require 'securerandom'
+require 'redis'
 
 class App < Sinatra::Base
 
