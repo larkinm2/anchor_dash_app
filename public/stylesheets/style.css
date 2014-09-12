@@ -22,6 +22,14 @@ div.widget, div.sub-widget {
   vertical-align: middle;
 }
 
+
+.login {
+  position: absolute;
+  left: 50%;
+  margin-left: -100px;
+  margin-top: 300px;
+}
+
 .congress {
   width: 220px;
   float: right;

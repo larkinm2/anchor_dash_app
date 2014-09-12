@@ -5,10 +5,15 @@
       <meta charset="UTF-8">
   </head>
     <body>
-      <% if session[:access_token] %>
-        <a href="/logout">Logout</a>
-      <% else %>
-        <a href="<%= @url %>">Login with Github</a>
-      <% end %>
+      <div id="login" class="login sub-widget">
+        <% if session[:access_token] %>
+          <a href="/logout">Logout</a>
+        <% else %>
+         <a href="<%= @url %>">Login with Github</a>
+        <% end %>
+          <a href="/profile/edit"><h2>Login Without</h2></a>
+      <div>
+
+
     </body>
 </html>
