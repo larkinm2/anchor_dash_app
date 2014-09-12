@@ -1,18 +1,20 @@
 <header>
-<a href="/"><h2>Anchor Dash</h2></a>
-<table style="float:right; margin-top:-150px;">
-  <thead>
-    <th>
-      <% if session["access_token"] %>
-      <a href="@profile"><p>profile.&nbsp;//</p></a>
-      </th>
-      <th>
-      <a href="/logout"><p>logout.</p></a>
-      </th>
-    <% end %>
-  </thead>
-</table>
+  <a href="/"><h2>Anchor Dash</h2></a>
+  <a href="/profile/edit"><h2>Edit Profile</h2></a>
+  <a href="/profiles"><h2>View Your Profile</h2></a>
+  <a href="/logout"><h2>Logout</h2></a>
+
+    <table style="float:right; margin-top:-150px;">
+      <thead>
+        <th>
+          <% if session["access_token"] %>
+            <a href="@profile"><p>profile.&nbsp;//</p></a>
+        </th>
+          <% end %>
+      </thead>
+    </table>
 </header>
+
 <div class="widget-wrapper">
   <div class="congress widget">
     <% if @user["senate_bills"] %>
@@ -77,48 +79,48 @@
         <br><br><br>
           <%=forecast[8]["title"]%>:
           <%=forecast[8]["fcttext"]%>
-        </div>
 
-      </ul>
-      <% end %>
+        </ul>
+      </div>
+    <% end %>
 
 
 
     <% if @user["top_stocks"] %>
-    <div id="four" class="stocks widget">
+      <div id="four" class="stocks widget">
 
-      S&P: <%=@data[6].last_trade_price%> <%=@data[6].change%>
-      <br><br>
-      Nasdaq: <%=@data[7].last_trade_price%> <%=@data[7].change%>
-      <br><br>
-      Google: <%=@data[0].last_trade_price%> <%=@data[0].change%>
-      <br><br>
-      Apple: <%=@data[1].last_trade_price%> <%=@data[1].change%>
-      <br><br>
-      Microsoft: <%=@data[4].last_trade_price%> <%=@data[4].change%>
-      <br><br>
-      Yahoo: <%=@data[5].last_trade_price%> <%=@data[5].change%>
-      <br><br>
-      Ford: <%=@data[2].last_trade_price%> <%=@data[2].change%>
-      <br><br>
-      Bank of America: <%=@data[3].last_trade_price%> <%=@data[3].change%>
-      <br><br>
-      EBAY: <%=@data[3].last_trade_price%> <%=@data[3].change%>
-      <br><br>
-      SIRUS XM: <%=@data[3].last_trade_price%> <%=@data[3].change%>
-      <br><br>
-      Twitter: <%=@data[3].last_trade_price%> <%=@data[3].change%>
+        S&P: <%=@data[6].last_trade_price%> <%=@data[6].change%>
+        <br><br>
+        Nasdaq: <%=@data[7].last_trade_price%> <%=@data[7].change%>
+        <br><br>
+        Google: <%=@data[0].last_trade_price%> <%=@data[0].change%>
+        <br><br>
+        Apple: <%=@data[1].last_trade_price%> <%=@data[1].change%>
+        <br><br>
+        Microsoft: <%=@data[4].last_trade_price%> <%=@data[4].change%>
+        <br><br>
+        Yahoo: <%=@data[5].last_trade_price%> <%=@data[5].change%>
+        <br><br>
+        Ford: <%=@data[2].last_trade_price%> <%=@data[2].change%>
+        <br><br>
+        Bank of America: <%=@data[3].last_trade_price%> <%=@data[3].change%>
+        <br><br>
+        EBAY: <%=@data[3].last_trade_price%> <%=@data[3].change%>
+        <br><br>
+        SIRUS XM: <%=@data[3].last_trade_price%> <%=@data[3].change%>
+        <br><br>
+        Twitter: <%=@data[3].last_trade_price%> <%=@data[3].change%>
 
-    </div>
+      </div>
     <% end %>
 
 
     <% if @user["twitter"] %>
-  <div id="five">
-      <% @tweets.each do |tweet|%>
-      <%= tweet %>
-      <% end %>
-    </div>
+      <div id="five">
+        <% @tweets.each do |tweet|%>
+        <%= tweet %>
+        <% end %>
+      </div>
     <% end %>
 </div>
 
