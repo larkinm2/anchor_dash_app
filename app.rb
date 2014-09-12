@@ -1,37 +1,7 @@
-  require 'sinatra/base'
-  require 'httparty'
-  require 'securerandom'
-  require 'twitter'
-  require 'yahoo_finance'
-  require 'uri'
-  require 'json'
-  require 'securerandom'
-  require 'redis'
+require 'yahoo_finance'
+require './application_controller'
 
-  class App < Sinatra::Base
-    configure do
-      enable :logging
-      enable :method_override
-      enable :sessions
-      @@profiles = []
-      enable :logging
-      enable :method_override
-      enable :sessions
-      uri = URI.parse(ENV['REDISTOGO_URL'])
-      $redis = Redis.new(host: uri.host,
-                         port: uri.port,
-                         password: uri.password)
-      $redis.flushdb
-    end
-
-    before do
-      logger.info "Request Headers: #{headers}"
-      logger.warn "Params: #{params}"
-    end
-
-    after do
-      logger.info "Response Headers: #{response.headers}"
-    end
+class App < ApplicationController
 
     ########################
     # Configuration
@@ -125,7 +95,7 @@
     end
 
     get('/profile/edit') do
-      render(:erb, :questionnaire, template: :layout)
+      render(:erb, :"anchor_profile/new", template: :layout)
     end
 
     post('/profile/new') do
@@ -169,4 +139,8 @@
       session[:access_token] = nil
       redirect to('/bye')
     end
+
+    get '/bye' do
+    render(:erb, :bye, template: :layout)
   end
+end
