@@ -4,7 +4,7 @@
   <thead>
     <th>
       <% if session["access_token"] %>
-      <a href="/profile/1"><p>profile.&nbsp;//</p></a>
+      <a href="@profile"><p>profile.&nbsp;//</p></a>
       </th>
       <th>
       <a href="/logout"><p>logout.</p></a>
@@ -15,7 +15,7 @@
 </header>
 <div class="widget-wrapper">
   <div class="congress widget">
-    <% if @user_one["senate_bills"] %>
+    <% if @user["senate_bills"] %>
       <div id="one" class="senate sub-widget">
             Senate Bills<br>
         Bill Description:
@@ -35,7 +35,7 @@
       </div>
     <% end %>
 
-    <% if @user_one["house_bills"] %>
+    <% if @user["house_bills"] %>
       <div id="two" class="house sub-widget">
         House Bills<br>
         Bill Description:
@@ -55,7 +55,7 @@
     <% end %>
   </div>
 
-    <% if @user_one["weather"] %>
+    <% if @user["weather"] %>
       <div id="three" class="weather widget">
         <% forecast = @wunderground_response["forecast"]["txt_forecast"]["forecastday"].first(12) %>
         <ul>
@@ -84,7 +84,7 @@
 
 
 
-    <% if @user_one["top_stocks"] %>
+    <% if @user["top_stocks"] %>
     <div id="four" class="stocks widget">
 
       S&P: <%=@data[6].last_trade_price%> <%=@data[6].change%>
@@ -113,7 +113,7 @@
     <% end %>
 
 
-    <% if @user_one["twitter"] %>
+    <% if @user["twitter"] %>
   <div id="five">
       <% @tweets.each do |tweet|%>
       <%= tweet %>

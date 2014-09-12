@@ -1,0 +1,28 @@
+<h2><%= session["username"] %> </h2>
+<p> aka </p>
+<h3> <%= @user["nickname"] %> </h3>
+<div id="profile">
+<ul>
+  <li>
+
+                user email:     <%= @profiles[:user_email] %>
+                <br/>
+                user city:      <%= @profiles[:user_city] %>
+                <br/>
+                user state:     <%= @profiles:user_state] %>
+                <br/>
+                House Bills?           <%= @profiles[:house_bills] %>
+                <br/>
+                Senate Bills?        <%= @profiles[:senate_bills] %>
+                <br/>
+                Twitter?      <%= @profiles[:twitter] %>
+                <br/>
+                Five Day Forecast?         <%= @profiles[:weather] %>
+                <br>
+                Top Stocks?      <%= @profiles[:top_stocks] %>
+                <br/>
+  </li>
+</ul>
+</div>
+<button><a href="/profile/edit"> edit profile.</a></button>
+<button><a href="/dash">return to dashboard.</a></button>

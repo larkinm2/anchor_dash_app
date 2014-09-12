@@ -1,0 +1,28 @@
+Profiles
+
+<ul>
+    <% @profiles.each_with_index do |profile, index| %>
+        <li>
+            <p>
+                <%= index + 1 %>.
+                user name:      <%= profile[:username] %>
+                <br/>
+                user email:     <%= profile[:email] %>
+                <br/>
+                user city:      <%= profile[:user_city] %>
+                <br/>
+                user state:     <%= profile[:user_state] %>
+                <br/>
+                Senate Bills?   <%= profile[:senate_bills] %>
+                <br/>
+                House Bills?    <%= profile[:house_bills] %>
+                <br/>
+                twitter?        <%= profile[:twitter] %>
+                <br/>
+                weather         <%= profile[:weather] %>
+                <br/>
+                Top Stocks?     <%= profile[:top_stocks] %>
+            </p>
+        </li>
+    <% end %>
+</ul>
