@@ -1,0 +1,6 @@
+ALL STORIES
+
+<% @stories.each do |story| %>
+  <%= link_to(story.description, story_path(story)) %>
+  </br>
+<% end %>

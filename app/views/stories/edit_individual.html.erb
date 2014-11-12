@@ -1,0 +1,28 @@
+
+<div id="logincontainter">
+Tell us about yourself!
+<%= form_for @story do |f| %>
+What's a nickname for this story?<br>
+<%= f.text_field :nickname %>
+  </br>
+  LinkedIn profile:<br>
+  <%= f.text_field :linked_in %>
+  </br>
+  Personal website:<br>
+  <%= f.text_field :personal_site %>
+  </br>
+  Link to your image:<br>
+  <%= f.text_field :image_url %>
+  </br>
+  Your location<br>
+  <%= f.text_field :personal_location %>
+  </br>
+  Your Pitch Please<br>
+  <%= f.text_field :personal_description %>
+  </br>
+  What are your skills?<br>
+  <%= f.text_field :skills %>
+  </br>
+  <%= f.submit "submit" %>
+<% end %>
+</div>

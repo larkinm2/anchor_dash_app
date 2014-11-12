@@ -1,0 +1,7 @@
+EDIT FORM
+<%= form_for(@pitch, :url=> {:action=> (@pitch.new_record? ? 'create' : 'update')}) do |f| %>
+<p>Enter Pitch</p>
+<%= f.text_field :body %>
+</br>
+<%= f.submit "update" %>
+<% end %>

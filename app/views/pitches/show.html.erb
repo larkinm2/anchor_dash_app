@@ -1,0 +1,13 @@
+
+<p>This is your Hook:</p>
+</br>
+<p><%= @pitch.body %></p>
+</br>
+<% if authorized? || admin? %>
+  <%= link_to 'Edit this pitch', edit_story_pitch_path(@story, @pitch) %>
+  </br>
+  <%= link_to 'Delete this pitch', story_pitch_path(@story, @pitch), method: :delete, data: { confirm: "Are you sure you want to delete this pitch? It can't be undone!"  } %>
+<% end %>
+</br>
+<%= link_to 'back', :back %>
+</p>

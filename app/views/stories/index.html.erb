@@ -1,0 +1,19 @@
+<div class="text-center">
+  <div class="logincontainer">
+    MY STORIES
+    </br>
+    </br>
+      <% if @user.stories.empty? == false %>
+      <% @user.stories.each do |story| %>
+        <div class="logincontainer">
+          <%= link_to(story[:nickname],story_path(story)) %>
+        </div>
+          </br>
+      <% end %>
+      <% else %>
+Whoa! Looks like you haven't made a story yet! <%= link_to("Make one!", new_story_path) %>
+<%end %>
+</br>
+<%= link_to 'Back', :back %>
+</div>
+</div>

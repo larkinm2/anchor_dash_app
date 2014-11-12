@@ -1,0 +1,27 @@
+<div id="logincontainer">
+
+<%= form_for @story do |f| %>
+<p>What's a nickname for this story?</p>
+<%= f.text_field :nickname %>
+  </br>
+  <p>LinkedIn profile:</p>
+  <%= f.text_field :linked_in %>
+  </br>
+  <p>Personal website:</p>
+  <%= f.text_field :personal_site %>
+  </br>
+  <p>Link to your image:</p>
+  <%= f.text_field :image_url %>
+  </br>
+  <p>Your location</p>
+  <%= f.text_field :personal_location %>
+  </br>
+  <p>Your Big Pitch</p>
+  <%= f.text_field :personal_description %>
+  </br>
+  <p>What are your skills?</p>
+  <%= f.text_field :skills %>
+  </br>
+  <%= f.submit "submit" %>
+<% end %>
+</div>

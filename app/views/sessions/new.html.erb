@@ -1,0 +1,50 @@
+
+
+
+<div class="front-matter">
+  <div class="text-center">
+
+    <h1>Welcome to The Hook</h1>
+    <p>You have 140 characters to make your case. Good luck.</p>
+  </div>
+</div>
+
+  <div class="logincontainer" >
+
+      <div class="text-center">
+        Login!<br>
+      </div><br>
+
+      <%= form_tag(session_path) do %>
+
+      <div class="text-center">
+        <%= label_tag(:email) %>
+      </div>
+
+
+      <div class="login">
+        <%= text_field_tag(:email) %>
+      </div>
+
+      <div class="text-center">
+        <%= label_tag(:password) %>
+      </div>
+
+
+      <div class="login">
+        <%= password_field_tag(:password) %>
+      </div>
+
+      <div class="login">
+        <%= submit_tag('Login') %>
+      </div>
+
+    <% end %>
+  <div>
+    <p style="color: red"><%= flash[:error] %> </p>
+  </div>
+
+  <div class="text-center"
+  <p><%= link_to('Sign up', new_user_path) %>
+  </div>
+

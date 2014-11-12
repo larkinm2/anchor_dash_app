@@ -1,0 +1,10 @@
+EDIT FORM
+<%= form_for @story do |f| %>
+<p>Enter email</p>
+<%= f.text_field :url %>
+</br>
+<p>Enter first name</p>
+<%= f.text_field :description %>
+</br>
+<%= f.submit "update" %>
+<% end %>

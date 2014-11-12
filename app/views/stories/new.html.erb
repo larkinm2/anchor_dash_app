@@ -1,0 +1,15 @@
+<h1>New Story</h1>
+<div id="logincontainer">
+<%= form_for @story do |f| %>
+  Enter URL
+  <%= f.text_field :url %>
+  </br>
+  Enter Description
+  <%= f.text_field :description %>
+  </br>
+  <%= hidden_field_tag(:userid, @user_id) %>
+  <%= f.submit "create story!" %>
+<% end %>
+
+<%= link_to 'Back', :back %>
+</div>
