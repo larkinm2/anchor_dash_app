@@ -6373,37 +6373,44 @@ h1 {
 .congress {
   width: 220px;
   float: right;
+  opacity: .9;
 }
 
 .senate {
   width: 200px;
   height:207px;
   text-align: center;
-  border: 3px solid blue;
-  background-color: #E4E4E4;
+  border: 3px solid gray;
+  background-color: black;
   border-radius: 10px;
-  overflow: scroll
+  overflow: scroll;
+  color: white;
+  opacity: .9;
 }
 
 .house {
   width: 200px;
-  height: 207px;
+  height: 210px;
   text-align: center;
   border-radius: 10px;
-  border: 3px solid red;
-  background-color: #E4E4E4;
-  overflow: scroll
+  border: 3px solid gray;
+  background-color: black;
+  overflow: scroll;
+  color: white;
+  opacity: .8;
 }
 
 .weather {
   float: left;
+  color: white;
   padding-right: 50px;
   width:450px;
   height: 420px;
   border-radius: 10px;
   text-align: center;
-  background-color: #E4E4E4;
-  border: 3px solid yellow;
+  background-color: black;
+  border: 3px solid gray;
+  opacity: .8;
 
 
  }
@@ -6412,12 +6419,27 @@ h1 {
   width:200px;
   height:420px;
   text-align: center;
-  border: 3px solid green;
+  border: 3px solid gray;
   background-color: black;
   color: white;
   border-radius: 10px;
   float: right;
-  background: transparent;
+  background-color: black;
+  opacity: .8;
+}
+
+
+.anchors {
+  width:410px;
+  height:420px;
+  text-align: center;
+  border: 3px solid gray;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  float: left;
+  background-color: black;
+  opacity: .8;
 }
 
 #five{
@@ -6451,3 +6473,24 @@ h1 {
   opacity: .9;
   border-radius: 5px;
 }
+
+.strong2 {
+  color: #44C0C2;
+}
+
+.strong3 {
+  color: #5587D9;
+}
+
+.strong4 {
+  color: #C43131;
+}
+
+.strong5 {
+  color: #C4A031;
+}
+
+.strong6 {
+  color: #5ED16C;
+}
+
